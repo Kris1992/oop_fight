@@ -5,19 +5,24 @@
 {% block content_class %}{{ parent() }} container-border-green p-2{% endblock %} 
 {% block content_body %}
     <div class="col-sm-12">
-        <a href="{{ path('app_hero_create') }}" class="btn btn-primary float-right">
+        <a href="{{ path('app_hero_create') }}" class="btn btn-primary float-right js-add">
             Create <span class="fa fa-plus-circle"></span>
         </a>
         <h2 class="text-green">Heros ({{ pagination.getTotalItemCount }})</h2>
         <div class="table-responsive">
-            <form action="" method="POST">
+            <form action="{{ path('app_hero_delete_multiple') }}" method="POST">
                 <table class="table table-hover" id="list">
                     <thead>
                         <tr>
                             <th></th>
-                            <th {% if pagination.isSorted('h.firstName') %} class="sorted" {% endif %}>
+                            <th {% if pagination.isSorted('h.name') %} class="sorted" {% endif %}>
                                 {{ knp_pagination_sortable(pagination, 'Name', 'h.name') }}
                             </th>
+                            <th>Left hand</th>
+                            <th>Right hand</th>
+                            <th>Head</th>
+                            <th>Body</th>
+                            <th>Foots</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -26,6 +31,11 @@
                             <tr>
                                 <td><input type="checkbox" name="deleteId[]" value="{{ hero.id }}"></td>
                                 <td>{{ hero.name }}</td>
+                                <td>{{ hero.leftHand }}</td>
+                                <td>{{ hero.rightHand }}</td>
+                                <td>{{ hero.head }}</td>
+                                <td>{{ hero.body }}</td>
+                                <td>{{ hero.foots }}</td>
                                 <td class="links-table">
                                     <div class="link-wrapper">
                                         <a href="{{ path('app_hero_delete', { id: hero.id }) }}" class="delete-item" data-name="hero" data-id="{{ hero.id }}" title="Delete">

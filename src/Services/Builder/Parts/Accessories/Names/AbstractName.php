@@ -15,4 +15,9 @@ abstract class AbstractName implements NamesModificatorInterface
         $this->name = $name;
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
 }

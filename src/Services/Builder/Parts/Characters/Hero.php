@@ -8,4 +8,5 @@ use App\Services\Builder\Parts\Character;
 class Hero extends Character
 { 
 
+
 }

@@ -16,7 +16,7 @@ class GoldArmor extends AbstractArmor
 
     public function __construct()
     {   
-        $data = $this->modifyQuality($baseName, $baseShield, 150);
+        $data = $this->modifyQuality($this->baseName, $this->baseShield, 150);
         parent::__construct($data['name'], $data['shield']);
     }
 

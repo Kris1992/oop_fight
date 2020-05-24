@@ -5,6 +5,7 @@ namespace App\Services\Builder;
 
 use App\Services\Builder\Parts\Accessories\Weapons\ColdSteel;
 use App\Services\Builder\Parts\Accessories\Weapons\Firearm;
+use App\Services\Builder\Parts\Accessories\Weapons\Fist;
 use App\Services\Builder\Parts\Accessories\Helmets\FullFaceHelmet;
 use App\Services\Builder\Parts\Accessories\Helmets\OpenFaceHelmet;
 use App\Services\Builder\Parts\Accessories\Helmets\Helmet;
@@ -15,7 +16,7 @@ use App\Services\Builder\Parts\Accessories\Boots\ArmoredBoots;
 use App\Services\Builder\Parts\Accessories\Boots\Boots;
 use App\Services\Builder\Parts\Accessories\Names\HumanName;
 use App\Services\Builder\Parts\Character;
-use App\Services\Builder\Parts\Characters\Hero;
+use App\Entity\Hero;
 
 class HeroBuilder implements Builder
 {
@@ -31,39 +32,42 @@ class HeroBuilder implements Builder
 
     public function addName()
     {
-        $this->hero->setPart('name', new HumanName($this->name));
+        $this->hero->setName((new HumanName($this->name))->getName());
     }
 
     public function addWeapon()
     {   
-
+        
         $probability = mt_rand(0,3);
         switch ($probability) {
             case 1:
-                $this->hero->setPart('rightHand', new ColdSteel('Sword', 10));
+                $this->hero->setRightHand((new ColdSteel('Sword', 10))->getWeapon());
+                $this->hero->setLeftHand((new Fist())->getWeapon());
                 break;
             case 2:
-                $this->hero->setPart('rightHand', new Firearm('Colt', 30));
-                $this->hero->setPart('leftHand', new Firearm('Colt', 20));
+                $this->hero->setRightHand((new Firearm('Colt', 30))->getWeapon());
+                $this->hero->setLeftHand((new Firearm('Colt', 20))->getWeapon());
             default:
                 //Unlucky man without weapon
+                $this->hero->setLeftHand((new Fist())->getWeapon());
+                $this->hero->setRightHand((new Fist())->getWeapon());
                 break;
-        } 
+        }
 
     }
     
     public function addHelmet()
     {
-
+        
         $probability = mt_rand(0,3);
         switch ($probability) {
             case 1:
-                $this->hero->setPart('head', new FullFaceHelmet());
+                $this->hero->setHead((new FullFaceHelmet())->getHelmet());
                 break;
             case 2:
-                $this->hero->setPart('head', new OpenFaceHelmet());
+                $this->hero->setHead((new OpenFaceHelmet())->getHelmet());
             default:
-                $this->hero->setPart('head', new Helmet('Cap', 5));
+                $this->hero->setHead((new Helmet('Cap', 5))->getHelmet());
                 break;
         }
 
@@ -71,16 +75,16 @@ class HeroBuilder implements Builder
 
     public function addArmor()
     {
-
+        
         $probability = mt_rand(0,3);
         switch ($probability) {
             case 1:
-                $this->hero->setPart('body', new GoldArmor());
+                $this->hero->setBody((new GoldArmor())->getArmor());
                 break;
             case 2:
-                $this->hero->setPart('body', new SteelArmor());
+                $this->hero->setBody((new SteelArmor())->getArmor());
             default:
-                $this->hero->setPart('body', new GambesonArmor());
+                $this->hero->setBody((new GambesonArmor())->getArmor());
                 break;
         }
 
@@ -88,16 +92,16 @@ class HeroBuilder implements Builder
 
     public function addBoots()
     {
-
+        
         $probability = mt_rand(0,1);
         switch ($probability) {
             case 0:
-                $this->hero->setPart('legs', new ArmoredBoots());
+                $this->hero->setFoots((new ArmoredBoots())->getBoots());
                 break;
             default:
-                $this->hero->setPart('body', new Boots());
+                $this->hero->setFoots((new Boots())->getBoots());
                 break;
-        } 
+        }
         
     }
 

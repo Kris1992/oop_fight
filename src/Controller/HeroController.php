@@ -22,7 +22,7 @@ class HeroController extends AbstractController
     /**
      * @Route("/hero", name="app_hero", methods={"GET"})
      */
-    public function index(HeroRepository $heroRepository, Request $request, PaginatorInterface $paginator)
+    public function index(HeroRepository $heroRepository, Request $request, PaginatorInterface $paginator, EntityManagerInterface $entityManager)
     {
         $heroQuery = $heroRepository->findAllQuery();
 
@@ -35,6 +35,9 @@ class HeroController extends AbstractController
         $heroBuilder = new HeroBuilder('Example');
         $newCharacter = (new Director())->build($heroBuilder);
         dump($newCharacter);
+
+        $entityManager->persist($newCharacter);
+        $entityManager->flush();
 
         return $this->render('hero/index.html.twig', [
             'pagination' => $pagination,
@@ -64,6 +67,40 @@ class HeroController extends AbstractController
         $this->addFlash('success','Hero was deleted :(');
         $response->send();
         return $response;
+
+    }
+
+    /**
+     * @Route("/hero/delete", name="app_hero_delete_multiple", methods={"POST", "DELETE"})
+     */
+    public function deleteMultiple(Request $request, HeroRepository $heroRepository, EntityManagerInterface $entityManager): Response
+    {
+        
+        $submittedToken = $request->request->get('token');
+        if($request->request->has('deleteId')) {
+            if ($this->isCsrfTokenValid('delete_multiple', $submittedToken)) {
+                $ids = $request->request->get('deleteId');
+                $heros = $heroRepository->findAllByIds($ids);
+                if($heros) {
+                    foreach ($heros as $hero) {
+                        $entityManager->remove($hero);
+                    }
+                    $entityManager->flush();
+
+                    $this->addFlash('success','Heros were deleted :(');
+                } else {
+                    $this->addFlash('warning','Nothing to do.');
+                }
+
+            } else {
+                $this->addFlash('danger','Missed token.');
+            }           
+
+        } else {
+            $this->addFlash('warning','Nothing to do.');
+        }
+        
+        return $this->redirectToRoute('app_hero');
 
     }
 

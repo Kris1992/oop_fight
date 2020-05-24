@@ -32,4 +32,19 @@ class HeroRepository extends ServiceEntityRepository
         ; 
     }
 
+    /**
+     * findAllByIds Find all Heros with given ids
+     * @param  array  $arrayIds Array with at least one id
+     * @return Hero[]
+     */
+    public function findAllByIds(array $arrayIds)
+    {
+        return $this->createQueryBuilder('h')
+            ->andWhere('h.id IN(:ids)')
+            ->setParameter('ids', $arrayIds)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

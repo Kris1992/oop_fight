@@ -6,14 +6,9 @@ namespace App\Services\Builder\Parts;
 abstract class Character
 {
 
-    /**
-     * @var object[]
-     */
-    private $data = [];
-
-    public function setPart(string $key, object $value)
+    public function __toString()
     {
-        $this->data[$key] = $value;
+
     }
 
 }

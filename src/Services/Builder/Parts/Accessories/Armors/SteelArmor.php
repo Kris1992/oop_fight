@@ -16,7 +16,7 @@ class SteelArmor extends AbstractArmor
 
     public function __construct()
     {   
-        $data = $this->modifyQuality($baseName, $baseShield, 40);
+        $data = $this->modifyQuality($this->baseName, $this->baseShield, 40);
         parent::__construct($this->baseName, $this->baseShield);
     }
 

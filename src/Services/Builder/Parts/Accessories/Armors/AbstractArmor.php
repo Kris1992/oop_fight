@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Services\Builder\Parts\Accessories\Armors;
 
+use App\Entity\Armor;
+
 abstract class AbstractArmor
 {
 
@@ -14,6 +16,11 @@ abstract class AbstractArmor
     {
         $this->name = $name;
         $this->shieldFactor = $shieldFactor;
+    }
+
+    public function getArmor(): Armor
+    {
+        return new Armor($this->name, $this->shieldFactor);
     }
 
 }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Services\Builder\Parts\Accessories\Weapons;
 
+use App\Entity\Weapon;
+
 abstract class AbstractWeapon
 {
 
@@ -14,6 +16,15 @@ abstract class AbstractWeapon
     {
         $this->name = $name;
         $this->power = $power;
+    }
+
+    /**
+     * [getWeapon Return Weapon Entity Object]
+     * @return Weapon
+     */
+    public function getWeapon(): Weapon
+    {
+        return new Weapon($this->name, $this->power);
     }
 
 }
