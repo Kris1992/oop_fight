@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\Builder;
 
-//use DesignPatterns\Creational\Builder\Parts\Door;
+use App\Services\Builder\Parts\Accessories\Names\HumanName;
 
 
 use App\Services\Builder\Parts\Character;
@@ -14,10 +14,32 @@ class MonsterBuilder implements Builder
     /** @var Monster $monster */
     private $monster;
 
-    public function addWeapon()
+    private $name;
+
+    public function __construct(string $name)
     {
-       // $this->truck->setPart('rightDoor', new Door());
-        //$this->truck->setPart('leftDoor', new Door());
+        $this->name = $name;
+    }
+
+    public function addName()
+    {
+        $this->hero->setPart('name', new HumanName($this->name));
+    }
+
+    public function addWeapon()
+    {   
+        $probability = mt_rand(0,3);
+        switch ($probability) {
+            case 1:
+                $this->hero->setPart('rightHand', new Mace(12));
+                break;
+            case 2:
+                $this->hero->setPart('rightHand', new Firearm('Colt', 30));
+                $this->hero->setPart('leftHand', new Firearm('Colt', 20));
+            default:
+                //Unlucky man without weapon
+                break;
+        } 
     }
     
     public function addHelmet()
@@ -27,12 +49,30 @@ class MonsterBuilder implements Builder
 
     public function addArmor()
     {
-
+        $probability = mt_rand(0,3);
+        switch ($probability) {
+            case 1:
+                $this->hero->setPart('body', new GoldArmor());
+                break;
+            case 2:
+                $this->hero->setPart('body', new SteelArmor());
+            default:
+                $this->hero->setPart('body', new GambesonArmor());
+                break;
+        } 
     }
 
     public function addBoots()
     {
-
+        $probability = mt_rand(0,1);
+        switch ($probability) {
+            case 0:
+                $this->hero->setPart('legs', new ArmoredBoots());
+                break;
+            default:
+                $this->hero->setPart('body', new Boots());
+                break;
+        } 
     }
 
     public function createCharacter()

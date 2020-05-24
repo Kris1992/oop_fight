@@ -7,9 +7,11 @@ use App\Services\Builder\Parts\Character;
 
 class Director
 {
+    
     public function build(Builder $builder): Character
     {
         $builder->createCharacter();
+        $builder->addName();
         $builder->addWeapon();
         $builder->addHelmet();
         $builder->addArmor();
@@ -17,4 +19,5 @@ class Director
 
         return $builder->getCharacter();
     }
+
 }

@@ -5,6 +5,7 @@ namespace App\Services\Builder\Parts\Accessories\Weapons;
 
 abstract class AbstractWeapon
 {
+
     protected $name;
 
     protected $power;
@@ -14,4 +15,5 @@ abstract class AbstractWeapon
         $this->name = $name;
         $this->power = $power;
     }
+
 }

@@ -5,6 +5,7 @@ namespace App\Services\Builder\Parts\Accessories\Modifiers;
 
 trait LuckyFactorTrait
 {   
+
     /** @var int [lucky modifier to weapon(0 or 1)] */
     private $isLucky;
 
@@ -12,5 +13,5 @@ trait LuckyFactorTrait
     {
         $this->isLucky = mt_rand(0,1);
     }
-}
 
+}

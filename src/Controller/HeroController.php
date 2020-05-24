@@ -4,10 +4,14 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\HeroRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Hero;
+
 
 use App\Services\Builder\HeroBuilder;
 use App\Services\Builder\Director;
@@ -25,10 +29,10 @@ class HeroController extends AbstractController
         $pagination = $paginator->paginate(
             $heroQuery, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            $request->query->getInt('perPage', 5)/*limit per page*/
+            $request->query->getInt('perPage', 10)/*limit per page*/
         );
 
-        $heroBuilder = new HeroBuilder();
+        $heroBuilder = new HeroBuilder('Example');
         $newCharacter = (new Director())->build($heroBuilder);
         dump($newCharacter);
 
@@ -50,10 +54,17 @@ class HeroController extends AbstractController
     /**
      * @Route("/hero/{id}", name="app_hero_delete", methods={"DELETE"})
      */
-    public function delete(string $id)
+    public function delete(Hero $hero, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('hero/index.html.twig', [
-            'controller_name' => 'HeroController',
-        ]);
+
+        $entityManager->remove($hero);
+        $entityManager->flush();
+
+        $response = new Response();
+        $this->addFlash('success','Hero was deleted :(');
+        $response->send();
+        return $response;
+
     }
+
 }

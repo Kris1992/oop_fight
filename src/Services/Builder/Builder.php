@@ -8,6 +8,8 @@ use App\Services\Builder\Parts\Character;
 interface Builder
 {
     public function createCharacter();
+    
+    public function addName();
 
     public function addWeapon();
 

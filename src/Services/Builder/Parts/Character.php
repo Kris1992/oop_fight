@@ -5,6 +5,7 @@ namespace App\Services\Builder\Parts;
 
 abstract class Character
 {
+
     /**
      * @var object[]
      */
@@ -14,4 +15,5 @@ abstract class Character
     {
         $this->data[$key] = $value;
     }
+
 }

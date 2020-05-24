@@ -6,5 +6,6 @@ namespace App\Services\Builder\Parts\Characters;
 use App\Services\Builder\Parts\Character;
 
 class Hero extends Character
-{
+{ 
+
 }
