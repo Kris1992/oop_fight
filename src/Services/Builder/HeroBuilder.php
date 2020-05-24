@@ -114,4 +114,5 @@ class HeroBuilder implements Builder
     {
         return $this->hero;
     }
+    
 }

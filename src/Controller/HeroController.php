@@ -10,11 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\HeroRepository;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Hero;
-
-
 use App\Services\Builder\HeroBuilder;
 use App\Services\Builder\Director;
+use App\Entity\Hero;
 
 class HeroController extends AbstractController
 {
@@ -32,13 +30,6 @@ class HeroController extends AbstractController
             $request->query->getInt('perPage', 10)/*limit per page*/
         );
 
-        $heroBuilder = new HeroBuilder('Example');
-        $newCharacter = (new Director())->build($heroBuilder);
-        dump($newCharacter);
-
-        $entityManager->persist($newCharacter);
-        $entityManager->flush();
-
         return $this->render('hero/index.html.twig', [
             'pagination' => $pagination,
         ]);
@@ -47,11 +38,25 @@ class HeroController extends AbstractController
     /**
      * @Route("/hero", name="app_hero_create", methods={"POST"})
      */
-    public function create()
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('hero/index.html.twig', [
-            'controller_name' => 'HeroController',
-        ]);
+        $submittedToken = $request->request->get('token');
+        $name = $request->request->get('name');
+
+        if ($this->isCsrfTokenValid('generate', $submittedToken) && trim($name) !== '') {
+            $heroBuilder = new HeroBuilder($name);
+            $newCharacter = (new Director())->build($heroBuilder);
+            $entityManager->persist($newCharacter);
+            $entityManager->flush();
+
+            $this->addFlash('success','Hero was generated ;)');
+        } else {
+            $this->addFlash('warning','Wrong name or token');
+        }
+
+        
+        return $this->redirectToRoute('app_hero');
+
     }
 
     /**
@@ -70,6 +75,9 @@ class HeroController extends AbstractController
 
     }
 
+    /*
+                                        I will do it by ajax to have RESTAPI links
+     */
     /**
      * @Route("/hero/delete", name="app_hero_delete_multiple", methods={"POST", "DELETE"})
      */

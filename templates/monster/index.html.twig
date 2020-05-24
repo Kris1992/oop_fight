@@ -1,20 +1,69 @@
-{% extends 'base.html.twig' %}
+{% extends 'content_base.html.twig' %}
 
-{% block title %}Hello MonsterController!{% endblock %}
+{% block title %}Monsters{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content_class %}{{ parent() }} container-border-green p-2{% endblock %} 
+{% block content_body %}
+    <div class="col-sm-12">
+        <h2 class="text-green">Monsters ({{ pagination.getTotalItemCount }})</h2>
+        <div class="table-responsive">
+            <form action="{{ path('app_monster_delete_multiple') }}" method="POST">
+                <table class="table table-hover" id="list">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th {% if pagination.isSorted('m.name') %} class="sorted" {% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'Name', 'm.name') }}
+                            </th>
+                            <th>Left hand</th>
+                            <th>Right hand</th>
+                            <th>Body</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for monster in pagination %}
+                            <tr>
+                                <td><input type="checkbox" name="deleteId[]" value="{{ monster.id }}"></td>
+                                <td>{{ monster.name }}</td>
+                                <td>{{ monster.leftHand }}</td>
+                                <td>{{ monster.rightHand }}</td>
+                                <td>{{ monster.body }}</td>
+                                <td class="links-table">
+                                    <div class="link-wrapper">
+                                        <a href="{{ path('app_monster_delete', { id: monster.id }) }}" class="delete-item" data-name="monster" data-id="{{ monster.id }}" title="Delete">
+                                            <span class="fa fa-trash-alt"></span>
+                                        </a>
+                                    </div>
+                                </td>           
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <input type="hidden" name="token" value="{{ csrf_token('delete_multiple') }}"/>
+                <button type="submit" class="btn btn-danger">Delete checked</button>
+            </form>
+        </div>
+        <div class="my-4">
+            <form action="{{ path('app_monster_create') }}" method="POST">
+                <div class="form-group">
+                    <input type="hidden" name="token" value="{{ csrf_token('generate') }}"/>
+                    <input type="text" name="name" class="form-control" id="nameInput" aria-describedby="nameHelp" placeholder="Monster name">
+                    <small id="nameHelp" class="form-text text-muted">Think about something catchy.</small>
+                    <button type="submit" class="btn btn-primary">Generate<span class="fa fa-plus-circle"></span></button>
+                </div>
+            </form>
+        </div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination, null, {}, {
+                'align': 'center'
+            }) }}
+            {% include 'per_page.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/symfony/oopFight/src/Controller/MonsterController.php'|file_link(0) }}">src/Controller/MonsterController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/symfony/oopFight/templates/monster/index.html.twig'|file_link(0) }}">templates/monster/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('js/_deleteCharacter.js') }}"></script>
 {% endblock %}

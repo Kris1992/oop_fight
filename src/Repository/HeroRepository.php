@@ -28,6 +28,16 @@ class HeroRepository extends ServiceEntityRepository
     public function findAllQuery(): Query
     {   
         return $this->createQueryBuilder('h')
+            ->join('h.body', 'b')
+            ->addSelect('b')
+            ->join('h.foots', 'f')
+            ->addSelect('f')
+            ->join('h.head', 'hd')
+            ->addSelect('hd')
+            ->join('h.leftHand', 'lh')
+            ->addSelect('lh')
+            ->join('h.rightHand', 'rh')
+            ->addSelect('rh')
             ->getQuery()
         ; 
     }

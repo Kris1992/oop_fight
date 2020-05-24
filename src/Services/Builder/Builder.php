@@ -20,4 +20,5 @@ interface Builder
     public function addBoots();
 
     public function getCharacter(): Character;
+
 }

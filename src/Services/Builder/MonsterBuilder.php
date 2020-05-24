@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace App\Services\Builder;
 
-use App\Services\Builder\Parts\Accessories\Names\HumanName;
-
-
+use App\Services\Builder\Parts\Accessories\Names\MonsterName;
+use App\Services\Builder\Parts\Accessories\Weapons\Mace;
+use App\Services\Builder\Parts\Accessories\Weapons\Fist;
+use App\Services\Builder\Parts\Accessories\Armors\LeatherArmor;
 use App\Services\Builder\Parts\Character;
-use App\Services\Builder\Parts\Characters\Monster;
+use App\Entity\Monster;
 
 class MonsterBuilder implements Builder
 {
@@ -23,23 +24,23 @@ class MonsterBuilder implements Builder
 
     public function addName()
     {
-        $this->hero->setPart('name', new HumanName($this->name));
+        $this->monster->setName((new MonsterName($this->name))->getName());
     }
 
     public function addWeapon()
     {   
-        $probability = mt_rand(0,3);
+        $probability = mt_rand(0,2);
         switch ($probability) {
             case 1:
-                $this->hero->setPart('rightHand', new Mace(12));
+                $this->monster->setRightHand((new Mace())->getWeapon());
+                $this->monster->setLeftHand((new Fist(12))->getWeapon());
                 break;
-            case 2:
-                $this->hero->setPart('rightHand', new Firearm('Colt', 30));
-                $this->hero->setPart('leftHand', new Firearm('Colt', 20));
             default:
-                //Unlucky man without weapon
+                $this->monster->setLeftHand((new Fist(14))->getWeapon());
+                $this->monster->setRightHand((new Fist(15))->getWeapon());
                 break;
         } 
+
     }
     
     public function addHelmet()
@@ -49,30 +50,12 @@ class MonsterBuilder implements Builder
 
     public function addArmor()
     {
-        $probability = mt_rand(0,3);
-        switch ($probability) {
-            case 1:
-                $this->hero->setPart('body', new GoldArmor());
-                break;
-            case 2:
-                $this->hero->setPart('body', new SteelArmor());
-            default:
-                $this->hero->setPart('body', new GambesonArmor());
-                break;
-        } 
+        $this->monster->setBody((new LeatherArmor())->getArmor());
     }
 
     public function addBoots()
     {
-        $probability = mt_rand(0,1);
-        switch ($probability) {
-            case 0:
-                $this->hero->setPart('legs', new ArmoredBoots());
-                break;
-            default:
-                $this->hero->setPart('body', new Boots());
-                break;
-        } 
+    
     }
 
     public function createCharacter()
@@ -84,4 +67,5 @@ class MonsterBuilder implements Builder
     {
         return $this->monster;
     }
+
 }
