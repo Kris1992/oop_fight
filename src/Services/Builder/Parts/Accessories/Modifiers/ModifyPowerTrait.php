@@ -19,7 +19,7 @@ trait ModifyPowerTrait
 
         $this->randomizeLucky();
         if ($this->isLucky) {
-            return $power*mt_rand(0,$multiplier);
+            return $power*mt_rand(0, $multiplier);
         }
 
         return $power;

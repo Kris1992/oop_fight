@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\MonsterRepository;
 use App\Repository\HeroRepository;
+use App\Services\BattleManager\BattleManagerInterface;
 
 class BattleController extends AbstractController
 {
@@ -30,22 +31,29 @@ class BattleController extends AbstractController
     /**
      * @Route("/battle", name="app_battle_start", methods={"POST"})
      */
-    public function fight(Request $request, EntityManagerInterface $entityManager): Response
+    public function fight(Request $request, EntityManagerInterface $entityManager, BattleManagerInterface $battleManager, MonsterRepository $monsterRepository, HeroRepository $heroRepository): Response
     {
         $submittedToken = $request->request->get('token');
         $charactersData = $request->request->all();
+        $monster = $monsterRepository->findOneBy(['id' => intval($charactersData['monsterSelect'])]);
+        $hero = $heroRepository->findOneBy(['id' => intval($charactersData['heroSelect'])]);
+        
+        if (!$hero || !$monster) {
+            $this->addFlash('warning','Choose characters.');
+            return $this->redirectToRoute('app_battle');
+        }
+        
+        
 
         if ($this->isCsrfTokenValid('battle_start', $submittedToken)) {
             try {
-                dump($charactersData);
-                throw new \Exception("Error Processing Request", 1);
-                
+                $battleManager->battle($hero, $monster);
             } catch (\Exception $e) {
                 $this->addFlash('warning',$e->getMessage());
             }
 
         } else {
-            $this->addFlash('warning','Missed token');
+            $this->addFlash('warning','Missed token.');
         }
 
         return $this->redirectToRoute('app_battle');
