@@ -15,6 +15,7 @@
                             <th {% if pagination.isSorted('m.name') %} class="sorted" {% endif %}>
                                 {{ knp_pagination_sortable(pagination, 'Name', 'm.name') }}
                             </th>
+                            <th>Health</th>
                             <th>Left hand</th>
                             <th>Right hand</th>
                             <th>Body</th>
@@ -26,6 +27,7 @@
                             <tr>
                                 <td><input type="checkbox" name="deleteId[]" value="{{ monster.id }}"></td>
                                 <td>{{ monster.name }}</td>
+                                <td>{{ monster.health }}</td>
                                 <td>{{ monster.leftHand }}</td>
                                 <td>{{ monster.rightHand }}</td>
                                 <td>{{ monster.body }}</td>

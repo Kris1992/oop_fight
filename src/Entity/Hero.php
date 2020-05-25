@@ -52,6 +52,11 @@ class Hero extends Character
      */
     private $foots;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $health;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,6 +130,18 @@ class Hero extends Character
     public function setFoots(Boots $foots): self
     {
         $this->foots = $foots;
+
+        return $this;
+    }
+
+    public function getHealth(): ?int
+    {
+        return $this->health;
+    }
+
+    public function setHealth(int $health): self
+    {
+        $this->health = $health;
 
         return $this;
     }

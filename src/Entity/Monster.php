@@ -42,6 +42,11 @@ class Monster extends Character
      */
     private $body;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $health;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +96,18 @@ class Monster extends Character
     public function setBody(Armor $body): self
     {
         $this->body = $body;
+
+        return $this;
+    }
+
+    public function getHealth(): ?int
+    {
+        return $this->health;
+    }
+
+    public function setHealth(int $health): self
+    {
+        $this->health = $health;
 
         return $this;
     }

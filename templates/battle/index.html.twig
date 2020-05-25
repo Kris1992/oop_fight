@@ -1,20 +1,34 @@
-{% extends 'base.html.twig' %}
+{% extends 'content_base.html.twig' %}
 
-{% block title %}Hello BattleController!{% endblock %}
+{% block title %}Battles{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content_class %}{{ parent() }} container-border-green p-2{% endblock %} 
+{% block content_body %}
+    <div class="col-sm-12">
+        <h2 class="text-green">Battles</h2>
+        <form action="{{ path('app_battle_start') }}" method="POST">
+            <div class="form-group">
+                <label for="monsterSelect">Choose Monster</label>
+                <select class="form-control" name="monsterSelect" id="monsterSelect">
+                    {% for monster in monsters %}
+                        <option value="{{ monster.id }}">{{ monster.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="heroSelect">Choose Hero</label>
+                <select class="form-control" name="heroSelect" id="heroSelect">
+                    {% for hero in heros %}
+                        <option value="{{ hero.id }}">{{ hero.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="hidden" name="token" value="{{ csrf_token('battle_start') }}"/>
+            <button type="submit" class="btn btn-primary">Fight</button>
+        </form>
+    </div>
+{% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/symfony/oop_fight/src/Controller/BattleController.php'|file_link(0) }}">src/Controller/BattleController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/symfony/oop_fight/templates/battle/index.html.twig'|file_link(0) }}">templates/battle/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block javascripts %}
+{{ parent() }}
 {% endblock %}

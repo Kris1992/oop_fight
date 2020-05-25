@@ -5,7 +5,7 @@ namespace App\Services\Builder;
 
 use App\Services\Builder\Parts\Character;
 
-interface Builder
+interface BuilderInterface
 {
     public function createCharacter();
     

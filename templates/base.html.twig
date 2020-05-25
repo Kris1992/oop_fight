@@ -33,6 +33,9 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ app.request.get('_route') == 'app_monster' ? 'active' }}" href="{{ path('app_monster') }}">Monsters</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ app.request.get('_route') == 'app_battle' ? 'active' }}" href="{{ path('app_battle') }}">Battle</a>
+                            </li>
                         </ul>
                     </div>
                 </nav>

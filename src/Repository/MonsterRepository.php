@@ -28,6 +28,12 @@ class MonsterRepository extends ServiceEntityRepository
     public function findAllQuery(): Query
     {   
         return $this->createQueryBuilder('m')
+            ->join('m.body', 'b')
+            ->addSelect('b')
+            ->join('m.leftHand', 'lh')
+            ->addSelect('lh')
+            ->join('m.rightHand', 'rh')
+            ->addSelect('rh')
             ->getQuery()
         ; 
     }

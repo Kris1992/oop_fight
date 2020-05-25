@@ -18,7 +18,7 @@ use App\Services\Builder\Parts\Accessories\Names\HumanName;
 use App\Services\Builder\Parts\Character;
 use App\Entity\Hero;
 
-class HeroBuilder implements Builder
+class HeroBuilder implements BuilderInterface
 {
     /** @var Hero $hero */
     private $hero;
@@ -33,6 +33,11 @@ class HeroBuilder implements Builder
     public function addName()
     {
         $this->hero->setName((new HumanName($this->name))->getName());
+    }
+
+    public function addHealth()
+    {
+        $this->hero->setHealth(mt_rand(300, 500));
     }
 
     public function addWeapon()

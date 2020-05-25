@@ -8,10 +8,11 @@ use App\Services\Builder\Parts\Character;
 class Director
 {
     
-    public function build(Builder $builder): Character
+    public function build(BuilderInterface $builder): Character
     {
         $builder->createCharacter();
         $builder->addName();
+        $builder->addHealth();
         $builder->addWeapon();
         $builder->addHelmet();
         $builder->addArmor();

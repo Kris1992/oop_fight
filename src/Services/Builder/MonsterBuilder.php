@@ -10,7 +10,7 @@ use App\Services\Builder\Parts\Accessories\Armors\LeatherArmor;
 use App\Services\Builder\Parts\Character;
 use App\Entity\Monster;
 
-class MonsterBuilder implements Builder
+class MonsterBuilder implements BuilderInterface
 {
     /** @var Monster $monster */
     private $monster;
@@ -25,6 +25,11 @@ class MonsterBuilder implements Builder
     public function addName()
     {
         $this->monster->setName((new MonsterName($this->name))->getName());
+    }
+
+    public function addHealth()
+    {
+        $this->monster->setHealth(mt_rand(400, 550));
     }
 
     public function addWeapon()
