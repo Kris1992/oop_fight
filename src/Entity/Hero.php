@@ -5,7 +5,6 @@ namespace App\Entity;
 
 use App\Repository\HeroRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Services\Builder\Parts\Character;
 
 /**
  * @ORM\Entity(repositoryClass=HeroRepository::class)
@@ -17,12 +16,7 @@ class Hero extends Character
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $name;
+    protected $id;
 
     /**
      * @ORM\OneToOne(targetEntity=Weapon::class, cascade={"persist", "remove"})
@@ -52,26 +46,9 @@ class Hero extends Character
      */
     private $foots;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $health;
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getRightHand(): ?Weapon
@@ -130,18 +107,6 @@ class Hero extends Character
     public function setFoots(Boots $foots): self
     {
         $this->foots = $foots;
-
-        return $this;
-    }
-
-    public function getHealth(): ?int
-    {
-        return $this->health;
-    }
-
-    public function setHealth(int $health): self
-    {
-        $this->health = $health;
 
         return $this;
     }

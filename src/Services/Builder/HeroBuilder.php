@@ -15,7 +15,7 @@ use App\Services\Builder\Parts\Accessories\Armors\GambesonArmor;
 use App\Services\Builder\Parts\Accessories\Boots\ArmoredBoots;
 use App\Services\Builder\Parts\Accessories\Boots\Boots;
 use App\Services\Builder\Parts\Accessories\Names\HumanName;
-use App\Services\Builder\Parts\Character;
+use App\Entity\Character;
 use App\Entity\Hero;
 
 class HeroBuilder implements BuilderInterface

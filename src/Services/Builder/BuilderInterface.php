@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\Builder;
 
-use App\Services\Builder\Parts\Character;
+use App\Entity\Character;
 
 interface BuilderInterface
 {

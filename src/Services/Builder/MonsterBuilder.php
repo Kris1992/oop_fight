@@ -7,7 +7,7 @@ use App\Services\Builder\Parts\Accessories\Names\MonsterName;
 use App\Services\Builder\Parts\Accessories\Weapons\Mace;
 use App\Services\Builder\Parts\Accessories\Weapons\Fist;
 use App\Services\Builder\Parts\Accessories\Armors\LeatherArmor;
-use App\Services\Builder\Parts\Character;
+use App\Entity\Character;
 use App\Entity\Monster;
 
 class MonsterBuilder implements BuilderInterface
