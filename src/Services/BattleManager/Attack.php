@@ -13,10 +13,10 @@ class Attack
     
     /**
      * [__construct Create Attack]
-     * @param int    $power        Initial value of power 
+     * @param float    $power        Initial value of power 
      * @param StrategyInterface $attackStrategy Choosen strategy
      */
-    public function __construct(int $power, StrategyInterface $attackStrategy)
+    public function __construct(float $power, StrategyInterface $attackStrategy)
     {
         $this->power = $power;
         $this->attackStrategy = $attackStrategy;
@@ -24,9 +24,9 @@ class Attack
 
     /**
      * [getTotalDamage Get total damage of attack]
-     * @return int
+     * @return float
      */
-    public function getTotalDamage(): int
+    public function getTotalDamage(): float
     {   
         return  $this->attackStrategy->attack($this->power);
     }

@@ -6,10 +6,10 @@ namespace App\Services\BattleManager\Strategy;
 class BothHandsAttackStrategy implements StrategyInterface
 {
 
-    public function attack(int $power): int
+    public function attack(float $power): float
     {   
         /* Critic attack from both hands */
-        return mt_rand($power, $power*2);
+        return floatval(mt_rand(intval($power), intval($power)*2));
     }
 
 }

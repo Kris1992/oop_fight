@@ -6,10 +6,10 @@ namespace App\Services\BattleManager\Strategy;
 class LeftHandAttackStrategy implements StrategyInterface
 {
 
-    public function attack(int $power): int
+    public function attack(float $power): float
     {   
         /* Left hand is less powerfull than right */
-        return intval($power/2);
+        return $power/2;
     }
 
 }

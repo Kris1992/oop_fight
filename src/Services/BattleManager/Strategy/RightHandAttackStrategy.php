@@ -6,7 +6,7 @@ namespace App\Services\BattleManager\Strategy;
 class RightHandAttackStrategy implements StrategyInterface
 {
 
-    public function attack(int $power): int
+    public function attack(float $power): float
     {   
         /* Right hand is more powerfull than left */
         return $power*2;

@@ -8,9 +8,9 @@ interface StrategyInterface
 
     /**
      * [attack Attack method]
-     * @param  int    $power Initial power of attack
-     * @return int    $damage
+     * @param  float    $power Initial power of attack
+     * @return float    $damage
      */
-    public function attack(int $power): int;
+    public function attack(float $power): float;
 
 }
