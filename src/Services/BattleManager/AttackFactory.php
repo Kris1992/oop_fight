@@ -3,15 +3,13 @@ declare(strict_types=1);
 
 namespace App\Services\BattleManager;
 
-use App\Services\BattleManager\Strategy\LeftHandAttackStrategy;
-use App\Services\BattleManager\Strategy\RightHandAttackStrategy;
-use App\Services\BattleManager\Strategy\BothHandsAttackStrategy;
-use App\Services\Builder\Parts\Character;
+use App\Services\BattleManager\Strategy\{LeftHandAttackStrategy, BothHandsAttackStrategy, RightHandAttackStrategy};
+use App\Entity\AbstractCharacter;
 
 class AttackFactory implements AttackFactoryInterface
 {
 
-    public function create(Character $character, string $strategyName): Attack
+    public function create(AbstractCharacter $character, string $strategyName): Attack
     {   
 
         $power = 0; 

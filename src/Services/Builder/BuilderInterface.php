@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\Builder;
 
-use App\Entity\Character;
+use App\Entity\AbstractCharacter;
 
 interface BuilderInterface
 {
@@ -19,6 +19,6 @@ interface BuilderInterface
 
     public function addBoots();
 
-    public function getCharacter(): Character;
+    public function getCharacter(): AbstractCharacter;
 
 }

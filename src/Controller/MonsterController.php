@@ -5,13 +5,11 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\{Response, Request};
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\MonsterRepository;
-use App\Services\Builder\MonsterBuilder;
-use App\Services\Builder\Director;
+use App\Services\Builder\{MonsterBuilder, Director};
 use App\Entity\Monster;
 
 class MonsterController extends AbstractController

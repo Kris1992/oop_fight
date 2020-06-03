@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\Services\Builder;
 
-use App\Entity\Character;
+use App\Entity\AbstractCharacter;
 
 class Director
 {
     
-    public function build(BuilderInterface $builder): Character
+    public function build(BuilderInterface $builder): AbstractCharacter
     {
         $builder->createCharacter();
         $builder->addName();

@@ -5,8 +5,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Monster;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Services\Builder\MonsterBuilder;
-use App\Services\Builder\Director;
+use App\Services\Builder\{MonsterBuilder, Director};
 
 class MonsterFixtures extends BaseFixture 
 {

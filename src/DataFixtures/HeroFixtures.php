@@ -5,8 +5,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Hero;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Services\Builder\HeroBuilder;
-use App\Services\Builder\Director;
+use App\Services\Builder\{HeroBuilder, Director};
 
 class HeroFixtures extends BaseFixture 
 {

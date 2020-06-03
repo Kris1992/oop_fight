@@ -1,16 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\MappedSuperclass;
 
 /**
  * Abstract base class to be extended by my entity classes with same fields
- *
- * @MappedSuperclass
+ **/
+
+/**
+ * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="typeCharacter")
  */
-abstract class Character
+abstract class AbstractCharacter
 {
     /**
      * @ORM\Id()
@@ -22,12 +26,17 @@ abstract class Character
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $health;
+    protected $health;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $type;
 
     public function getId(): ?int
     {
@@ -57,4 +66,17 @@ abstract class Character
 
         return $this;
     }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+    
 }

@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Services\BattleManager;
 
-use App\Services\Builder\Parts\Character;
+use App\Entity\{AbstractCharacter, BattleResult};
 use App\Services\BattleManager\Config\StrategyTypes;
-use App\Entity\BattleResult;
+use App\Services\BattleManager\BattleResultFactory\BattleResultFactoryInterface;
 
 /**
  * Take care about all battle processes 
@@ -13,11 +13,14 @@ use App\Entity\BattleResult;
 class BattleManager extends StrategyTypes implements BattleManagerInterface
 {
     
-    private $attackFactory;    
+    private $attackFactory;
 
-    public function __construct(AttackFactoryInterface $attackFactory)
+    private $battleResultFactory;    
+
+    public function __construct(AttackFactoryInterface $attackFactory, BattleResultFactoryInterface $battleResultFactory)
     {
         $this->attackFactory = $attackFactory;
+        $this->battleResultFactory = $battleResultFactory;
     }
 
     /**
@@ -25,7 +28,7 @@ class BattleManager extends StrategyTypes implements BattleManagerInterface
      *
      * @return BattleResult
      */
-    public function battle(Character $hero, Character $monster): BattleResult
+    public function battle(AbstractCharacter $hero, AbstractCharacter $monster): BattleResult
     {
 
         $heroHealth = $hero->getHealth();
@@ -36,7 +39,7 @@ class BattleManager extends StrategyTypes implements BattleManagerInterface
 
             $heroHealth -= $this->getTotalDamage($monster);
             $monsterHealth -= $this->getTotalDamage($hero);
-            $index;
+            $index++;
         }
 
         if ($heroHealth <= 0 && $monsterHealth <= 0) {
@@ -50,16 +53,15 @@ class BattleManager extends StrategyTypes implements BattleManagerInterface
             $loser = $monster;
         }
 
-        return new BattleResult($winner, $loser, $index);
-
+        return $this->battleResultFactory->create($hero, $monster, $winner, $loser, $index);
     }
 
     /**
      * [getTotalDamage Get total damage depends of strategy and character]
-     * @param  Character $character Character object
+     * @param  AbstractCharacter $character Character object
      * @return float 
      */
-    private function getTotalDamage(Character $character): float 
+    private function getTotalDamage(AbstractCharacter $character): float 
     {
 
         $strategyKey = array_rand(self::$attackStrategies, 1);

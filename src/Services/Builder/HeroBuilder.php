@@ -3,26 +3,19 @@ declare(strict_types=1);
 
 namespace App\Services\Builder;
 
-use App\Services\Builder\Parts\Accessories\Weapons\ColdSteel;
-use App\Services\Builder\Parts\Accessories\Weapons\Firearm;
-use App\Services\Builder\Parts\Accessories\Weapons\Fist;
-use App\Services\Builder\Parts\Accessories\Helmets\FullFaceHelmet;
-use App\Services\Builder\Parts\Accessories\Helmets\OpenFaceHelmet;
-use App\Services\Builder\Parts\Accessories\Helmets\Helmet;
-use App\Services\Builder\Parts\Accessories\Armors\GoldArmor;
-use App\Services\Builder\Parts\Accessories\Armors\SteelArmor;
-use App\Services\Builder\Parts\Accessories\Armors\GambesonArmor;
-use App\Services\Builder\Parts\Accessories\Boots\ArmoredBoots;
-use App\Services\Builder\Parts\Accessories\Boots\Boots;
+use App\Services\Builder\Parts\Accessories\Weapons\{ColdSteel, Firearm, Fist};
+use App\Services\Builder\Parts\Accessories\Helmets\{FullFaceHelmet, OpenFaceHelmet, Helmet};
+use App\Services\Builder\Parts\Accessories\Armors\{GoldArmor, SteelArmor, GambesonArmor};
+use App\Services\Builder\Parts\Accessories\Boots\{ArmoredBoots, Boots};
 use App\Services\Builder\Parts\Accessories\Names\HumanName;
-use App\Entity\Character;
-use App\Entity\Hero;
+use App\Entity\{AbstractCharacter, Hero};
 
 class HeroBuilder implements BuilderInterface
 {
     /** @var Hero $hero */
     private $hero;
 
+    /** @var string $name */
     private $name;
 
     public function __construct(string $name)
@@ -113,9 +106,10 @@ class HeroBuilder implements BuilderInterface
     public function createCharacter()
     {
         $this->hero = new Hero();
+        $this->hero->setType('Hero');
     }
 
-    public function getCharacter(): Character
+    public function getCharacter(): AbstractCharacter
     {
         return $this->hero;
     }

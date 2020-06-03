@@ -1,0 +1,34 @@
+{% extends 'content_base.html.twig' %}
+
+{% block title %}Battles{% endblock %}
+
+{% block content_class %}{{ parent() }} container-border-green p-2{% endblock %} 
+{% block content_body %}
+    <div class="col-sm-12">
+        <h2 class="text-green">Battles</h2>
+        <form action="{{ path('app_battle_start') }}" method="POST">
+            <div class="form-group">
+                <label for="monsterSelect">Choose Monster</label>
+                <select class="form-control" name="monsterSelect" id="monsterSelect">
+                    {% for monster in monsters %}
+                        <option value="{{ monster.id }}">{{ monster.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="heroSelect">Choose Hero</label>
+                <select class="form-control" name="heroSelect" id="heroSelect">
+                    {% for hero in heros %}
+                        <option value="{{ hero.id }}">{{ hero.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="hidden" name="token" value="{{ csrf_token('battle_start') }}"/>
+            <button type="submit" class="btn btn-primary">Fight</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

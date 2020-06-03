@@ -5,11 +5,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{Request, Response};
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\MonsterRepository;
-use App\Repository\HeroRepository;
+use App\Repository\{MonsterRepository, HeroRepository};
 use App\Services\BattleManager\BattleManagerInterface;
 
 class BattleController extends AbstractController
@@ -41,13 +39,16 @@ class BattleController extends AbstractController
         if (!$hero || !$monster) {
             $this->addFlash('warning','Choose characters.');
             return $this->redirectToRoute('app_battle');
-        }
-        
-        
+        } 
 
         if ($this->isCsrfTokenValid('battle_start', $submittedToken)) {
             try {
-                $battleManager->battle($hero, $monster);
+                $battleResult = $battleManager->battle($hero, $monster);
+                $entityManager->persist($battleResult);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_battle_result_show', ['id' => $battleResult->getId() ]);
+
             } catch (\Exception $e) {
                 $this->addFlash('warning',$e->getMessage());
             }

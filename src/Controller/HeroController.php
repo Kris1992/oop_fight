@@ -5,13 +5,11 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{Response, Request};
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\HeroRepository;
-use Symfony\Component\HttpFoundation\Request;
-use App\Services\Builder\HeroBuilder;
-use App\Services\Builder\Director;
+use App\Services\Builder\{HeroBuilder, Director};
 use App\Entity\Hero;
 
 class HeroController extends AbstractController

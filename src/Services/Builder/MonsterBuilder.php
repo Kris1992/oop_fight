@@ -4,17 +4,16 @@ declare(strict_types=1);
 namespace App\Services\Builder;
 
 use App\Services\Builder\Parts\Accessories\Names\MonsterName;
-use App\Services\Builder\Parts\Accessories\Weapons\Mace;
-use App\Services\Builder\Parts\Accessories\Weapons\Fist;
+use App\Services\Builder\Parts\Accessories\Weapons\{Mace, Fist};
 use App\Services\Builder\Parts\Accessories\Armors\LeatherArmor;
-use App\Entity\Character;
-use App\Entity\Monster;
+use App\Entity\{AbstractCharacter,Monster};
 
 class MonsterBuilder implements BuilderInterface
 {
     /** @var Monster $monster */
     private $monster;
 
+    /** @var string $name */
     private $name;
 
     public function __construct(string $name)
@@ -66,9 +65,10 @@ class MonsterBuilder implements BuilderInterface
     public function createCharacter()
     {
         $this->monster = new Monster();
+        $this->monster->setType('Monster');
     }
 
-    public function getCharacter(): Character
+    public function getCharacter(): AbstractCharacter
     {
         return $this->monster;
     }

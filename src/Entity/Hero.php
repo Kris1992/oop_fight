@@ -9,47 +9,36 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=HeroRepository::class)
  */
-class Hero extends Character
+class Hero extends AbstractCharacter
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    protected $id;
 
     /**
      * @ORM\OneToOne(targetEntity=Weapon::class, cascade={"persist", "remove"})
      */
-    private $rightHand;
+    protected $rightHand;
 
     /**
      * @ORM\OneToOne(targetEntity=Weapon::class, cascade={"persist", "remove"})
      */
-    private $leftHand;
+    protected $leftHand;
 
     /**
      * @ORM\OneToOne(targetEntity=Helmet::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $head;
+    protected $head;
 
     /**
      * @ORM\OneToOne(targetEntity=Armor::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $body;
+    protected $body;
 
     /**
      * @ORM\OneToOne(targetEntity=Boots::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $foots;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    protected $foots;
 
     public function getRightHand(): ?Weapon
     {
