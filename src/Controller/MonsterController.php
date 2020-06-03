@@ -18,7 +18,7 @@ class MonsterController extends AbstractController
     /**
      * @Route("/monster", name="app_monster", methods={"GET"})
      */
-    public function index(MonsterRepository $monsterRepository, Request $request, PaginatorInterface $paginator, EntityManagerInterface $entityManager)
+    public function index(MonsterRepository $monsterRepository, Request $request, PaginatorInterface $paginator)
     {
         $monsterQuery = $monsterRepository->findAllQuery();
 

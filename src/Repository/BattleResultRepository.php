@@ -6,6 +6,7 @@ namespace App\Repository;
 use App\Entity\BattleResult;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method BattleResult|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,32 +21,20 @@ class BattleResultRepository extends ServiceEntityRepository
         parent::__construct($registry, BattleResult::class);
     }
 
-    // /**
-    //  * @return BattleResult[] Returns an array of BattleResult objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
+    /**
+     * findAllQuery Find all battle results
+     * @return Query
+     */
+    public function findAllQuery(): Query
+    {   
+        return $this->createQueryBuilder('br')
+            ->join('br.firstParticipant', 'fp')
+            ->addSelect('fp')
+            ->join('br.secondParticipant', 'sp')
+            ->addSelect('sp')
+            ->orderBy('br.createdAt', 'DESC')
             ->getQuery()
-            ->getResult()
-        ;
+        ; 
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?BattleResult
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    
 }

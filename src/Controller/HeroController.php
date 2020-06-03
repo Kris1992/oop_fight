@@ -18,7 +18,7 @@ class HeroController extends AbstractController
     /**
      * @Route("/hero", name="app_hero", methods={"GET"})
      */
-    public function index(HeroRepository $heroRepository, Request $request, PaginatorInterface $paginator, EntityManagerInterface $entityManager)
+    public function index(HeroRepository $heroRepository, Request $request, PaginatorInterface $paginator)
     {
         $heroQuery = $heroRepository->findAllQuery();
 

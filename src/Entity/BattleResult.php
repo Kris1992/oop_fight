@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Repository\BattleResultRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=BattleResultRepository::class)
@@ -46,6 +47,12 @@ class BattleResult
      * @ORM\JoinColumn(nullable=false)
      */
     private $secondParticipant;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -130,5 +137,17 @@ class BattleResult
         
         return $description;
     }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    /*public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }*/
 
 }

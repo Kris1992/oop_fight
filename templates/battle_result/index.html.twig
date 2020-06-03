@@ -5,27 +5,38 @@
 {% block content_class %}{{ parent() }} container-border-green p-2{% endblock %} 
 {% block content_body %}
     <div class="col-sm-12">
-        <h2 class="text-green">Battles</h2>
-        <form action="{{ path('app_battle_start') }}" method="POST">
-            <div class="form-group">
-                <label for="monsterSelect">Choose Monster</label>
-                <select class="form-control" name="monsterSelect" id="monsterSelect">
-                    {% for monster in monsters %}
-                        <option value="{{ monster.id }}">{{ monster.name }}</option>
-                    {% endfor %}
-                </select>
+        <h2 class="text-green">Last battles ({{ pagination.getTotalItemCount }})</h2>
+        {% for battleResult in pagination %}
+            <div class="card text-center my-3">
+                <div class="card-header">
+                    <strong>
+                        Battle between {{ battleResult.firstParticipant.name }} and {{ battleResult.secondParticipant.name }}
+                    </strong>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% if battleResult.winner %}
+                            <span class="fas fa-trophy text-gold"></span>
+                            Winner is {{ battleResult.winner.name }}
+                        {% else %}
+                            <span class="fas fa-fist-raised text-primary"></span>
+                            Draw
+                        {% endif %}
+                    </h5>
+                    <p class="card-text">{{ battleResult }}</p>
+                    <a href="{{ path('app_battle_result_show', {'id': battleResult.id }) }}" class="btn btn-primary btn-sm text-uppercase float-right">Show</a>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ battleResult.createdAt|ago }}
+                </div>
             </div>
-            <div class="form-group">
-                <label for="heroSelect">Choose Hero</label>
-                <select class="form-control" name="heroSelect" id="heroSelect">
-                    {% for hero in heros %}
-                        <option value="{{ hero.id }}">{{ hero.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <input type="hidden" name="token" value="{{ csrf_token('battle_start') }}"/>
-            <button type="submit" class="btn btn-primary">Fight</button>
-        </form>
+        {% endfor %}        
+        <div class="navigation">
+            {{ knp_pagination_render(pagination, null, {}, {
+                'align': 'center'
+            }) }}
+            {% include 'per_page.html.twig' %}
+        </div>
     </div>
 {% endblock %}
 
